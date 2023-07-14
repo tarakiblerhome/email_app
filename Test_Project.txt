@@ -1,0 +1,95 @@
+The scope of testing, the test objectives, and the expected outcome of the testing process. The test approach also includes the roles and responsibilities of the testing team, the test environment, and the test data requirements.
+
+The scope of this testing will be to verify that the Email UI, backend server, Inbound Mail Server, and Outbound Mail Server work together to send and receive emails.  The testing team will simulate incoming mail messages and will verify outgoing mail on the Outbound Mail Server but will not actually verify on the recipient end.
+Unit tests will be written for each piece by development, integration and system testing will be done by the QA team.  
+System and Integration tests will be done using the UI.
+Test environment setup needs to include ??? some test SMTP server that doesn't send real emails but logs messages and some way to simulate incoming messages.  
+I would work with devops and dev to find a tool that would work for the above in our test environments.
+This testing will validate the following requirements:
+• Req_159: Then Email shall be sent successfully to any valid email address from To, Cc, and/or Bcc address lines
+• Req_42: All email addresses identified as spam by the user shall be automatically sent to the
+spam folder
+
+Test data needed:
+  99 Valid email addresses
+  Invalid email address
+  Content for the email
+  Email listed as spam
+
+Out of Scope:
+  Testing content of the email
+  Personal database interactions (Address book, personal email settings, calendar, list of sent and received emails)
+
+Questions:
+What constitutes a valid email address
+Is there a maximum number of recipients
+What happens if there is an invalid email address listed
+Same email more than once?
+How is an email listed as spam? Where will it be stored?
+
+
+Assumption
+Valid email must match the following regex
+  ^[A-Z0-9@. _%+-]{6,254}$
+Max of 99 email addresses
+If any email addresses are invalid, an error will display and email will not be sent.
+Multiple email addresses separated by ;s
+
+Test Cases (written from UI perspective):
+Given a valid email in the To field
+When user presses send
+Then Email shall be sent successfully
+
+Given a valid email in the CC field
+When user presses send
+Then Email shall be sent successfully
+
+Given a valid email in the BCC field
+When user presses send
+Then Email shall be sent successfully
+
+Given a valid email in the To, CC, and BCC field
+When user presses send
+Then Email shall be sent successfully
+
+Given 99 valid emails in the To field
+When user presses send
+Then Email shall be sent successfully
+
+Given 33 valid emails in the To field
+ And 33 valid emails in the CC field
+ And 33 valid emails in the BCC field
+When user presses send
+Then Email shall be sent successfully
+
+Given n invalid email in the To field
+When user presses send
+Then an error displays 
+and the email shall not be sent
+
+Given a invalid email in the CC field
+When user presses send
+Then an error displays 
+and the email shall not be sent
+
+Given a invalid email in the BCC field
+When user presses send
+Then an error displays 
+and the email shall not be sent
+
+Given a valid email in the To and BCC field
+And an invalid email in the CC field
+When user presses send
+Then an error displays 
+and the email shall not be sent
+
+Given 98 valid emails in the To field
+And 1 invalid email in the To field
+When user presses send
+then an error displays 
+and the email shall not be sent
+
+Given user receives an email
+When email is from an address marked as spam
+Then the email will be sent to the spam folder
+
