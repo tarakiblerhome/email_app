@@ -1,10 +1,9 @@
-The scope of testing, the test objectives, and the expected outcome of the testing process. The test approach also includes the roles and responsibilities of the testing team, the test environment, and the test data requirements.
-
 The scope of this testing will be to verify that the Email UI, backend server, Inbound Mail Server, and Outbound Mail Server work together to send and receive emails.  The testing team will simulate incoming mail messages and will verify outgoing mail on the Outbound Mail Server but will not actually verify on the recipient end.
 Unit tests will be written for each piece by development, integration and system testing will be done by the QA team.  
 System and Integration tests will be done using the UI.
 Test environment setup needs to include ??? some test SMTP server that doesn't send real emails but logs messages and some way to simulate incoming messages.  
 I would work with devops and dev to find a tool that would work for the above in our test environments.
+
 This testing will validate the following requirements:
 • Req_159: Then Email shall be sent successfully to any valid email address from To, Cc, and/or Bcc address lines
 • Req_42: All email addresses identified as spam by the user shall be automatically sent to the
